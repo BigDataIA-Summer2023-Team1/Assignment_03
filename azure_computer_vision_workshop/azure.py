@@ -197,7 +197,7 @@ def get_topn_images(df, topn=5, disp=False):
     return topn_list, simil_topn_list
 
 
-def view_similar_images_using_image(reference_image, topn_list, 
+def view_similar_images_using_image(reference_image, topn_list,
                                     simil_topn_list, num_rows=2, num_cols=3):
     """
     Plot similar images using an image with Azure Computer Vision 4 Florence
@@ -229,7 +229,7 @@ def view_similar_images_using_image(reference_image, topn_list,
             ax.axis('off')
 
     plt.show()
-    
+
     print("\033[1;31;32m",
           datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
           "Powered by Azure Computer Vision Florence")
@@ -242,7 +242,7 @@ def view_similar_images_using_prompt(query, topn_list, simil_topn_list,
     """
     print("\033[1;31;34m")
     print("Similar images using query =", query)
-    
+
     num_images = len(topn_list)
     FIGSIZE = (12, 8)
     fig, axes = plt.subplots(nrows=num_rows, ncols=num_cols, figsize=FIGSIZE)
@@ -261,7 +261,7 @@ def view_similar_images_using_prompt(query, topn_list, simil_topn_list,
             ax.axis('off')
 
     plt.show()
-    
+
     print("\033[1;31;32m",
           datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
           "Powered by Azure Computer Vision Florence")
@@ -321,7 +321,7 @@ def side_by_side_images(image_file1, image_file2):
     fig, ax = plt.subplots(1, 2, figsize=(10, 5))
     ax[0].imshow(plt.imread(image_file1))
     ax[1].imshow(plt.imread(image_file2))
-    
+
     for i in range(2):
         ax[i].axis('off')
         ax[i].set_title(['Initial image', 'Without the background'][i])
@@ -368,10 +368,10 @@ def get_image_from_url(image_url):
     """
     response = requests.get(image_url)
     image = Image.open(BytesIO(response.content)).convert("RGB")
-   
+
     output_image = 'download.jpg'
     image.save(output_image)
-    
+
     return image
 
 
@@ -384,11 +384,11 @@ def get_results_using_image(reference_image, nobackground_image,
     df = get_similar_images_using_image(list_emb, image_files, nobackground_image)
     df.head(topn).style.background_gradient(
         cmap=sns.light_palette("green", as_cmap=True))
-  
+
     topn_list, simil_topn_list = get_topn_images(df, topn, disp=disp)
     nb_cols = 3
     nb_rows = (topn + nb_cols - 1) // nb_cols
-    view_similar_images_using_image(reference_image, topn_list, simil_topn_list, 
+    view_similar_images_using_image(reference_image, topn_list, simil_topn_list,
                                     num_cols=nb_cols, num_rows=nb_rows)
 
     return df
@@ -402,11 +402,11 @@ def get_results_using_prompt(query, image_files, list_emb, topn, disp=False):
     df = get_similar_images_using_prompt(query, image_files, list_emb)
     df.head(topn).style.background_gradient(
         cmap=sns.light_palette("green", as_cmap=True))
-  
+
     topn_list, simil_topn_list = get_topn_images(df, topn, disp=disp)
     nb_cols = 3
     nb_rows = (topn + nb_cols - 1) // nb_cols
-    view_similar_images_using_prompt(query, topn_list, simil_topn_list, 
+    view_similar_images_using_prompt(query, topn_list, simil_topn_list,
                                     num_cols=nb_cols, num_rows=nb_rows)
 
     return df
