@@ -25,6 +25,8 @@ from dotenv import load_dotenv
 from io import BytesIO
 from PIL import Image
 
+from cleanvision.imagelab import Imagelab
+
 
 # Reading Azure Computer Vision 4 endpoint and key from the env file
 
@@ -329,6 +331,28 @@ def side_by_side_images(image_file1, image_file2):
     plt.tight_layout()
     plt.show()
 
+def describe_image_with_AzureCV4_custom(image_file):
+    """
+    Get tags & caption from an image using Azure Computer Vision 4 Florence
+    """
+    options = "&features=tags,caption"
+    model = "?api-version=2023-02-01-preview&modelVersion=latest"
+    url = endpoint + "/computervision/imageanalysis:analyze" + model + options
+
+    headers_cv = {
+        'Content-type': 'application/octet-stream',
+        'Ocp-Apim-Subscription-Key': key
+    }
+
+    with open(image_file, 'rb') as f:
+        data = f.read()
+
+    r = requests.post(url, data=data, headers=headers_cv)
+    results = r.json()
+
+    return {"mainCaption": results['captionResult']['text'],
+            "mainCaptionResult": results['captionResult']['confidence'],
+            "detectedTags": results['tagsResult']['values']}
 
 def describe_image_with_AzureCV4(image_file):
     """
@@ -429,6 +453,19 @@ def get_results_using_prompt(query, image_files, list_emb, topn, disp=False):
                                     num_cols=nb_cols, num_rows=nb_rows)
 
     return df
+
+def get_results_using_prompt_custom(query, image_files, list_emb, topn, disp=False):
+    """
+    Get the topn results from a visual search using a text query
+    Will generate a df, display the topn images and return the df
+    """
+    df = get_similar_images_using_prompt(query, image_files, list_emb)
+    df.head(topn).style.background_gradient(
+        cmap=sns.light_palette("green", as_cmap=True))
+  
+    topn_list, simil_topn_list = get_topn_images(df, topn, disp=disp)
+
+    return list(zip(topn_list, simil_topn_list))
 
 
 
