@@ -1,3 +1,6 @@
 streamlit==1.22.0
 python-dotenv
 nomic
+matplotlib
+seaborn
+cleanvision
