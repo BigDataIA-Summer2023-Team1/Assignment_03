@@ -46,7 +46,7 @@ def display_image_catalog():
             with row[j]:
                 display_image_with_button(image)
 
-
+@st.cache_data
 def display_dataset_report():
     imagelab = Imagelab(data_path="./fashion_dataset")
     imagelab.find_issues()
