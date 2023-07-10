@@ -7,7 +7,7 @@ RUN pip install --upgrade pip
 WORKDIR /app
 # Change the working dir inside the container - cd /app
 
-COPY  main.py requirements.txt img_embeddings.json azure.py ./
+COPY  main.py requirements.txt img_embeddings.json azure.py files.json ./
 COPY pages ./pages
 COPY fashion_dataset ./fashion_dataset
 COPY output ./output

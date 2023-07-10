@@ -1,19 +1,8 @@
-import os
 import streamlit as st
 
 from azure import *
+from utils import fetch_files
 from cleanvision.imagelab import Imagelab
-
-# st.title('Assignment 03')
-
-
-def fetch_files(directory):
-    file_list = []
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_list.append(file_path)
-    return file_list
 
 
 def display_image_with_button(image_path):

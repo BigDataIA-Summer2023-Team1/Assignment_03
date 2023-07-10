@@ -1,27 +1,11 @@
-import datetime
-import glob
 import json
-import os
-import random
-import sys
-import time
 import streamlit as st
 
-from dotenv import load_dotenv
-from PIL import Image
 from azure import *
-
-def fetch_files(directory):
-    file_list = []
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_list.append(file_path)
-    return file_list
+from utils import fetch_files
 
 
 # Streamlit app
-
 st.title("Image Generation with Prompt")
 
 # Input prompt

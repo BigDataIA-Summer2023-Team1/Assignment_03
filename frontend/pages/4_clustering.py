@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 import streamlit as st
+from utils import fetch_files
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
@@ -15,16 +16,6 @@ key = os.getenv("azure_cv_key")
 endpoint = os.getenv("azure_cv_endpoint")
 
 st.title("Dataset Clustering")
-
-
-@st.cache_data
-def fetch_files(directory):
-    file_list = []
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            file_path = os.path.join(root, file)
-            file_list.append(file_path)
-    return file_list
 
 
 def dataset_clustering():
