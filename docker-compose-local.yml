@@ -10,4 +10,7 @@ services:
     restart: always
     ports:
       - "30006:8090"
-#    environment:
+    environment:
+      azure_cv_key: ${azure_cv_key}
+      azure_cv_endpoint: ${azure_cv_endpoint}
+      atlas_nomic_key: ${atlas_nomic_key}
