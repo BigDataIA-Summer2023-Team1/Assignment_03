@@ -162,4 +162,5 @@ def dataset_clustering():
     st.image("./output/cluster.png")
 
 
-dataset_clustering()
+if st.button("Get Clusters"):
+    dataset_clustering()
